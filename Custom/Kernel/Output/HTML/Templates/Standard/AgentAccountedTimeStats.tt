@@ -1,0 +1,126 @@
+# --
+# Custom/Kernel/Output/HTML/Templates/Standard/AgentAccountedTimeStats.tt - frontend template
+# Copyright (C) 2017 Edicarlos Lopes dos Santos <edicarlos.lds at gmail.com>
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="MainBox ARIARoleMain LayoutFixedSidebar SidebarFirst">
+    <h1>[% Translate("Accounted Time Stats") | html %]</h1>
+	
+	<div class="SidebarColumn">
+        <div class="WidgetSimple">
+            <div class="Header">
+                <h2>[% Translate("Hint") | html %]</h2>
+            </div>
+            <div class="Content">
+                <p class="FieldExplanation">
+                    [% Translate("Here you can see the accounted time stats.") | html %]
+                </p>
+            </div>
+        </div>
+    </div>
+	
+    <div class="ContentColumn">
+		<div class="WidgetSimple">			
+			<div class="Header">
+                <h2>[% Translate("Search Params") | html %]</h2>
+            </div>
+			<div class="Content">
+				<form action="[% Env("CGIHandle") %]" method="post" enctype="multipart/form-data" class="Validate">
+					<input type="hidden" name="Action" value="[% Env("Action") %]"/>
+					<input type="hidden" name="Subaction" value="Search"/>
+					<fieldset class="TableLike">
+					
+						<label for="QueueIDs">[% Translate("Queue") | html %]:</label>
+                        <div class="Field">
+                            [% Data.QueuesStrg %]
+                        </div>
+                        <div class="Clear"></div>
+
+						<label for="OwnerIDs">[% Translate("Agent") | html %]/[% Translate("Owner") | html %]:</label>
+                        <div class="Field">
+                            [% Data.OwnerStrg %]							
+                        </div>
+                        <div class="Clear"></div>
+						
+						<div id="OwnerView" class="Field Hidden">
+                            <input type="checkbox" id="OwnerTimeView" name="OwnerTimeView" value="1"><span class="FieldExplanation">[% Translate("Only accounted time by selected agent(s).") %]</span>
+                        </div>
+                        <div class="Clear"></div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('#OwnerIDs').bind('change', function (Event) {    
+	if( $('#OwnerIDs').val() ){
+		$('#OwnerView').removeClass('Hidden');
+	}
+	else{
+		$('#OwnerView').addClass('Hidden');
+	}
+});
+//]]></script>
+[% END %]						
+					
+						<label for="TimeSearchTimePoint">[% Translate("Period") | html %]:</label>
+                        <div class="Field">
+                            <input type="radio" name="TimeSearchType" id="TimeSearchTimePoint" value="TimePoint"/>
+                            [% Translate("Accounted time") | html %] [% Data.AccountedTimePointStart %] [% Data.AccountedTimePoint %] [% Data.AccountedTimePointFormat %].
+                        </div>
+                        <div class="Clear"></div>
+
+                        <div class="Field">
+                            <input type="radio" name="TimeSearchType" value="TimeSlot" checked="checked"/>
+                            [% Translate("Accounted time between") | html %] [% Data.AccountedTimeStart %] [% Translate("and") | html %] [% Data.AccountedTimeStop %].
+                        </div>
+                        <div class="Clear"></div>						
+												
+						<label for="OutputFormat" class="Mandatory"><span class="Marker">*</span> [% Translate("Format") | html %]:</label>
+                        <div class="Field">
+                            [% Data.OutputFormatStrg %]
+                        </div>
+						<div id="OutputFormatError" class="TooltipErrorMessage">
+                            <p>[% Translate("This field is required.") | html %]</p>
+                        </div>
+                        <div class="Clear"></div>
+						
+						<div class="Field SpacingTop">                            							
+							<div class="Value">
+								<button class="Primary CallForAction" type="submit" id="Submit" value="[% Translate("Search") | html %]">
+									<span><i class="fa fa-search"></i>	[% Translate("Search") | html %]</span>
+								</button>								
+                            </div>
+						</div>
+						
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('#Submit').bind('click', function (Event) {
+    var Format = $('#OutputFormat').val(),
+        URL;
+
+    // Open both HTML and PDF output in a popup because PDF is shown inline
+    if (Format === 'Print' || Format === 'Screen' ) {
+        URL = '[% Env("Baselink") %]' + Core.AJAX.SerializeForm($('#OutputFormat').parents('form'));
+        Core.UI.Popup.OpenPopup(URL, 'Accounted Time Stats', 'Default');
+        return false;
+    }else{
+		return true;
+	}
+});
+//]]></script>
+[% END %]
+						
+						<div class="SpacingTop"></div>
+						
+					</fieldset>				
+				</form>
+			</div>
+		</div>		
+    </div>
+</div>
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+
+//]]></script>
+[% END %]

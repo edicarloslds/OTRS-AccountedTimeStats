@@ -1,0 +1,77 @@
+/**
+ * @project     OTRS (http://www.otrs.org) - Agent Frontend
+ * @copyright   OTRS AG
+ * @license     AGPL (http://www.gnu.org/licenses/agpl.txt)
+ */
+
+/**
+ * @package     Skin "Default"
+ * @section     Application
+ * @subsection  AgentStatistics
+ */
+
+@media screen,projection,tv,handheld {
+
+/**
+ * @subsubsection     General
+ */
+ 
+.DataTable{
+	border-collapse: collapse;
+}
+
+.DataTable tfoot{
+	background: #eeeeee;
+	border-top: 1px solid #ccc;
+}
+
+.DataTable tfoot tr{
+    position: relative;
+}
+
+.DataTable tfoot tr:hover{
+    z-index: 10;
+}
+
+.DataTable tfoot td:last-child{
+    border-right: none;
+}
+
+.DataTable tfoot tr:hover td,
+.DataTable tfoot tr:active td.Clickable{
+    background: #FCB24B;
+}
+
+.DataTable tfoot tr.Invalid {
+    color: #CCC;
+}
+
+.DataTable tfoot td {
+    padding: 0 10px;
+    border-right: 1px dotted #CCC;
+	font-weight: bold;
+}
+
+.DataTable tfoot td.UnreadArticles {
+    padding: 0px;
+}
+
+.RTL .DataTable tfoot td {
+    border-left: 1px dotted #CCC;
+    border-right: none;
+}
+
+.DataTable tfoot tr:hover td {
+    #border-right-color: #fff;
+}
+
+.DataTable tfoot td:last-child {
+    border-right: none;
+}
+
+.WidgetSimple > .ActionRow {
+    overflow: auto;
+    padding: 0px 8px 0px;
+}
+
+} /* end @media */

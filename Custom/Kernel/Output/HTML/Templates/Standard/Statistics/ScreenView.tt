@@ -1,0 +1,119 @@
+# --
+# Custom/Kernel/Output/HTML/Templates/Standard/Statistics/ScreenView.tt - frontend template
+# Copyright (C) 2017 Edicarlos Lopes dos Santos <edicarlos.lds at gmail.com>
+# --
+# This software comes with ABSOLUTELY NO WARRANTY. For details, see
+# the enclosed file COPYING for license information (AGPL). If you
+# did not receive this file, see http://www.gnu.org/licenses/agpl.txt.
+# --
+
+<div class="MainBox AriaRoleMain">
+    <h1 class="Center SpacingBottom">[% Translate("Accounted Time Stats") | html %]</h1>
+	
+	<div class="WidgetSimple">
+		<div class="Header">
+			<h2>[% Translate("Ticket List") | html %]</h2>
+			
+[% RenderBlockStart("ContextSettings") %]			
+			<ul class="ContextFunctions">
+				<li class="ContextSettings">
+					<a href="#" id="ShowContextSettingsDialog" title="[% Translate("Settings") | html %]">
+						<i class="fa fa-cog"></i>
+						<span>[% Translate("Settings") | html %]</span>
+					</a>
+				</li>
+			</ul>
+
+			<div id="ContextSettingsDialogContainer" class="Hidden">
+				<form action="[% Env("CGIHandle") %]" method="post" id="ContextSettingsDialog">
+					<input type="hidden" name="Action" value="AgentAccountedTimeStats"/>
+					<input type="hidden" name="Subaction" value="Update"/>
+					<input type="hidden" name="Group" value="[% Data.Group | html %]"/>
+					<input type="hidden" name="RedirectURL" value="[% Data.RequestedURL | html %]"/>
+					<fieldset class="TableLike">
+						<label for="[% Data.PreferencesKey | html %]">[% Translate("Tickets per page") | html %]:</label>
+						<div class="Field">
+							[% Data.PageShownString %]
+						</div>
+						<div class="Clear"></div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		
+[% WRAPPER JSOnDocumentComplete %]
+<script type="text/javascript">//<![CDATA[
+$('#ShowContextSettingsDialog').bind('click', function (Event) {
+    Core.UI.Dialog.ShowContentDialog($('#ContextSettingsDialogContainer'), [% Translate("Settings") | JSON %], '20%', 'Center', true,
+        [
+            {
+                Label: [% Translate("Submit") | JSON %],
+                Type: 'Submit',
+                Class: 'Primary'}
+        ]);
+    Event.preventDefault();
+    Event.stopPropagation();
+    return false;
+});
+//]]></script>
+[% END %]
+[% RenderBlockEnd("ContextSettings") %]
+		
+		<div class="ActionRow">
+            <span class="Pagination">
+[% RenderBlockStart("OverviewNavBarPageNavBar") %]
+                [% Data.ResultLong %]
+                [% Data.SiteNavBarLong %]
+[% RenderBlockEnd("OverviewNavBarPageNavBar") %]
+            </span>
+        </div>
+		
+		<div class="Content">
+			<table class="Sortable DataTable" id="Table">
+				<thead>				
+					<tr>
+[% RenderBlockStart("Header") %]					
+						<th class="Center">
+							<span>
+								[% IF (Data.HeaderItem == 'AccountedTime') %]
+									[% Translate(Data.HeaderItem) | html %] ([% Translate( Config("AccountedTimeFormat") ) %])
+								[% ELSE %]
+									[% Translate(Data.HeaderItem) | html %]
+								[% END %]
+							</span>
+						</th>
+[% RenderBlockEnd("Header") %]						
+					</tr>					
+				</thead>
+				<tbody>
+[% RenderBlockStart("NoDataFound") %]
+                    <tr>
+                        <td colspan="6">
+                            [% Translate("No data found.") | html %]
+                        </td>
+                    </tr>
+[% RenderBlockEnd("NoDataFound") %]
+[% RenderBlockStart("Row") %]
+					<tr>
+[% RenderBlockStart("ItemRow") %]		
+						<td>
+							<span>[% Data.DataItem | html %]</span>
+						</td>
+[% RenderBlockEnd("ItemRow") %]
+					</tr>
+[% RenderBlockEnd("Row") %]					
+				</tbody>
+[% RenderBlockStart("Subtotal") %]				
+				<tfoot>
+					<tr>
+					  <td colspan="[% Data.Colspan | html %]"><span>Subtotal</span></td>
+					  <td><span>[% Data.AccountedTimeTotal | html %]</span></td>
+					</tr>
+				</tfoot>
+[% RenderBlockEnd("Subtotal") %]				
+			</table>
+		</div>
+	</div>
+	
+    <div class="Center SpacingTop"></div>
+</div>
