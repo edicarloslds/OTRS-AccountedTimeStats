@@ -1,7 +1,7 @@
 # OTRS-AccountedTimeStats
 Module OTRS to display accounted time reports.
 
-**Prerequisites**
+**Pre-requisites**
 
 - OTRS 6
 
