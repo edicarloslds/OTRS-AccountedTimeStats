@@ -327,7 +327,7 @@ sub _TicketListView{
 		Result => 'ARRAY',
 		%TicketFilters,
 		UserID => $Self->{UserID},
-	);
+	);	
 	
 	# get default columns
 	my $Columns = $ConfigObject->Get('AccountedTimeStats::TicketsView::DefaultOverviewColumns') || {};
@@ -348,7 +348,7 @@ sub _TicketListView{
 			TicketIDs => \@TicketIDs,
 			%TicketFilters,
 			%Param
-		);
+		);		
 		
 		$Param{Total} = scalar @{$TicketData};
 		
@@ -691,6 +691,7 @@ sub _GetTicketData{
     my $TimeObject = $Kernel::OM->Get('Kernel::System::Time');
 	my $ConfigObject = $Kernel::OM->Get('Kernel::Config');
 	my $UserObject   = $Kernel::OM->Get('Kernel::System::User');
+	my $ArticleObject = $Kernel::OM->Get('Kernel::System::Ticket::Article');
 	
 	my @Data = ();
 		
@@ -700,26 +701,24 @@ sub _GetTicketData{
 		my %TicketData = ();
 		$TicketData{AccountedTime} = 0;
 	
- 		my @ArticleIDs = $TicketObject->ArticleIndex(
+ 		my @ArticleList = $ArticleObject->ArticleList(
  			TicketID => $TicketID
  		);
 		
 		ARTICLE:
-		foreach my $ArticleID (@ArticleIDs){
-			my %Article = $TicketObject->ArticleGet(
-				ArticleID => $ArticleID,
-			    UserID    => $Self->{UserID},
-			);
+		foreach my $ArticleMetaData (@ArticleList){
+			next ARTICLE if !$ArticleMetaData;
+			next ARTICLE if !IsHashRefWithData($ArticleMetaData);
 			
 			# get only article added by agent
 			if( $Param{OwnerTimeView} && IsArrayRefWithData( $Param{OwnerIDs} ) ){
-				if ( !grep { $_ eq $Article{CreatedBy} } @{$Param{OwnerIDs}} ) {
+				if ( !grep { $_ eq $ArticleMetaData->{CreateBy} } @{$Param{OwnerIDs}} ) {
 					next ARTICLE;
 				}
 			}
 			
 			my $ArticleCreateTime = $TimeObject->TimeStamp2SystemTime( 
-				String => $Article{Created} 
+				String => $ArticleMetaData->{CreateTime} 
 			);
 			
 			my $SystemTimeNewer = $TimeObject->TimeStamp2SystemTime(
@@ -735,7 +734,7 @@ sub _GetTicketData{
 				&& ( $ArticleCreateTime <= $SystemTimeOlder ) 
 			) 
 			{
-				$TicketData{AccountedTime} += $TicketObject->ArticleAccountedTimeGet( ArticleID => $ArticleID);
+				$TicketData{AccountedTime} += $ArticleObject->ArticleAccountedTimeGet( ArticleID => $ArticleMetaData->{ArticleID});
 			}
 		}
 		

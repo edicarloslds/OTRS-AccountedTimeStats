@@ -26,6 +26,7 @@ sub Data {
 	
 	# frontend template screen view
     $Self->{Translation}->{'Screen View'} = 'Exibição em Tela';
+    $Self->{Translation}->{'Screen'} = 'Visualizar';
     $Self->{Translation}->{'Ticket List'} = 'Lista de Chamados';
 }
 

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<otrs_config version="2.0" init="Application">
+	<Setting Name="Frontend::Module###AgentAccountedTimeStats" Required="0" Valid="1">
+        <Description Translatable="1">FrontendModuleRegistration for AccountedTimeStats module.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration</Navigation>
+        <Value>
+            <Item ValueType="FrontendRegistration">
+                <Hash>
+                    <Item Key="Group">
+                        <Array>
+                            <Item>stats</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="GroupRo">
+                        <Array>
+							<Item>stats</Item>
+                        </Array>
+                    </Item>
+                    <Item Key="Description" Translatable="1"></Item>
+                    <Item Key="Title" Translatable="1">Accounted Time Stats</Item>
+                    <Item Key="NavBarName">Reports</Item>
+                </Hash>
+            </Item>
+        </Value>
+    </Setting>
+    <Setting Name="Loader::Module::AgentAccountedTimeStats###001-AccountedTimeStats" Required="0" Valid="1">
+        <Description Translatable="1">Loader module registration for the agent interface.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::Loader</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="CSS">
+                    <Array>
+						<Item>Core.Agent.AccountedTimeStats.css</Item>
+                    </Array>
+                </Item>
+                <Item Key="JavaScript">
+                    <Array>
+                    </Array>
+                </Item>
+            </Hash>
+        </Value>
+    </Setting>
+	<Setting Name="Frontend::Navigation###AgentAccountedTimeStats###001-AccountedTimeStats" Required="0" Valid="1">
+        <Description Translatable="1">Main menu item registration.</Description>
+        <Navigation>Frontend::Agent::ModuleRegistration::MainMenu</Navigation>
+        <Value>
+            <Array>
+                <DefaultItem ValueType="FrontendNavigation">
+                    <Hash>
+                    </Hash>
+                </DefaultItem>
+                <Item>
+                    <Hash>
+                        <Item Key="Group">
+                            <Array>
+								<Item>stats</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="GroupRo">
+                            <Array>
+								<Item>stats</Item>
+                            </Array>
+                        </Item>
+                        <Item Key="Description" Translatable="1"></Item>
+                        <Item Key="Name" Translatable="1">AccountedTime</Item>
+                        <Item Key="Link">Action=AgentAccountedTimeStats;Subaction=Overview</Item>
+                        <Item Key="LinkOption"></Item>
+                        <Item Key="NavBar">Reports</Item>
+                        <Item Key="Type"></Item>
+                        <Item Key="Block"></Item>
+                        <Item Key="AccessKey"></Item>
+                        <Item Key="Prio">300</Item>
+                    </Hash>
+                </Item>
+            </Array>
+        </Value>
+    </Setting>
+	<Setting Name="AccountedTimeFormat" Required="1" Valid="1">
+        <Description Translatable="1">Define the output format to accounted time.</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Item ValueType="Select" SelectedID="Hours">
+                <Item ValueType="Option" Value="Hours">Hours</Item>
+                <Item ValueType="Option" Value="Minutes">Minutes</Item>
+            </Item>
+        </Value>
+    </Setting>
+	<Setting Name="PreferencesGroups###AccountedTimeOverviewPageShown" Required="0" Valid="1">
+        <Description Translatable="1">Parameters for the pages (in which the Accounted Time are shown) of the Accounted Time overview.</Description>
+        <Navigation>Frontend::Agent::Preferences</Navigation>
+        <Value>
+            <Hash>
+                <Item Key="Module">Kernel::Output::HTML::Preferences::Generic</Item>
+                <Item Key="Column">Other Settings</Item>
+                <Item Key="Label" Translatable="1">Accounted Time Overview Limit</Item>
+                <Item Key="Key" Translatable="1">Accounted Time limit per page for Dynamic Fields Overview</Item>
+                <Item Key="Data">
+                    <Hash>
+                        <Item Key="10">10</Item>
+                        <Item Key="15">15</Item>
+                        <Item Key="20">20</Item>
+                        <Item Key="25">25</Item>
+                        <Item Key="30">30</Item>
+                        <Item Key="35">35</Item>
+                    </Hash>
+                </Item>
+                <Item Key="DataSelected">25</Item>
+                <Item Key="PrefKey">AccountedTimeOverviewPageShown</Item>
+                <Item Key="Prio">9000</Item>
+                <Item Key="Active">0</Item>
+            </Hash>
+        </Value>
+    </Setting>
+	<Setting Name="AccountedTimeStats::TicketsView::DefaultOverviewColumns" Required="1" Valid="1">
+        <Description Translatable="1">General ticket data shown in the ticket overviews (fall-back). Possible settings: 0 = Disabled, 1 = Available.</Description>
+        <Navigation>Core</Navigation>
+        <Value>
+            <Hash>
+				<DefaultItem ValueType="Select">
+                    <Item ValueType="Option" Value="0" Translatable="1">0 - Disabled</Item>
+                    <Item ValueType="Option" Value="1" Translatable="1">1 - Available</Item>
+                    <Item ValueType="Option" Value="2" Translatable="1">2 - Enabled by default</Item>
+                </DefaultItem>
+                <Item Key="Age" SelectedID="1"></Item>
+                <Item Key="Changed" SelectedID="0"></Item>
+                <Item Key="CustomerID" SelectedID="1"></Item>
+                <Item Key="CustomerName" SelectedID="0"></Item>
+                <Item Key="CustomerUserID" SelectedID="0"></Item>
+                <Item Key="EscalationResponseTime" SelectedID="0"></Item>
+                <Item Key="EscalationSolutionTime" SelectedID="0"></Item>
+                <Item Key="EscalationTime" SelectedID="0"></Item>
+                <Item Key="EscalationUpdateTime" SelectedID="0"></Item>
+                <Item Key="TicketNumber" SelectedID="1"></Item>
+                <Item Key="Lock" SelectedID="1"></Item>
+                <Item Key="Owner" SelectedID="1"></Item>
+                <Item Key="PendingTime" SelectedID="0"></Item>
+                <Item Key="Queue" SelectedID="1"></Item>
+                <Item Key="Responsible" SelectedID="0"></Item>
+                <Item Key="Priority" SelectedID="0"></Item>
+                <Item Key="Service" SelectedID="0"></Item>
+                <Item Key="State" SelectedID="1"></Item>
+                <Item Key="SLA" SelectedID="0"></Item>
+                <Item Key="Title" SelectedID="1"></Item>
+                <Item Key="Type" SelectedID="0"></Item>
+            </Hash>
+        </Value>
+    </Setting>	
+</otrs_config>

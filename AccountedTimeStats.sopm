@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <otrs_package version="1.0">
     <Name>AccountedTimeStats</Name>
-    <Version>5.0.0</Version>
-    <Framework>5.x</Framework>
+    <Version>6.0.0</Version>
+    <Framework>6.x</Framework>
     <Vendor>Edicarlos Lopes</Vendor>
     <URL></URL>
     <License>GNU AFFERO GENERAL PUBLIC LICENSE Version 3, November 2007</License>
-    <ChangeLog Version="5.0.0" Date="2017-03-26 18:48:00">Versão inicial.</ChangeLog>
+    <ChangeLog Version="6.0.0" Date="2018-03-26 14:39:00">Atualizado para a versão 6 do OTRS.</ChangeLog>
     <Description Lang="pt_BR">Modulo para exibir relatórios de tempo comtabilizado.</Description>
     <Description Lang="en">Module to display accounted time reports.</Description>
     <IntroInstall Type="post" Lang="pt_BR" Title="obrigado!">Obrigado por instalar o módulo Estatísticas de Tempo Contabilizado.</IntroInstall>
@@ -14,7 +14,7 @@
     <BuildDate>?</BuildDate>
     <BuildHost>?</BuildHost>
     <Filelist>
-		<File Permission="644" Location="Kernel/Config/Files/AccountedTimeStats.xml"></File>
+		<File Permission="644" Location="Kernel/Config/Files/XML/AccountedTimeStats.xml"></File>
         <File Permission="644" Location="Kernel/Language/pt_BR_AccountedTimeStats.pm"></File>
 		<File Permission="644" Location="Custom/Kernel/Modules/AgentAccountedTimeStats.pm"></File>
 		<File Permission="644" Location="Custom/Kernel/Output/HTML/Templates/Standard/AgentAccountedTimeStats.tt"></File>
